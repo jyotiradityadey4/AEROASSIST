@@ -1,122 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEROASSIST | Aviation Support</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AEROASSIST | Aviation Support</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef3f8;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.app {
+    width: 100%;
+    max-width: 500px;
+    height: 100vh;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+
+.header {
+    background: #12395b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 24px;
+}
+
+.header p {
+    font-size: 13px;
+    margin-top: 5px;
+    opacity: 0.85;
+}
+
+/* Chat */
+
+#chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+}
+
+.bot {
+    justify-content: flex-start;
+}
+
+.user {
+    justify-content: flex-end;
+}
+
+.bubble {
+    max-width: 80%;
+    padding: 12px 15px;
+    border-radius: 15px;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+.bot .bubble {
+    background: #edf2f7;
+    color: #222;
+    border-bottom-left-radius: 4px;
+}
+
+.user .bubble {
+    background: #12395b;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+/* Quick buttons */
+
+.quick-buttons {
+    padding: 10px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+}
+
+.quick-buttons button {
+    border: none;
+    background: #e7eef5;
+    padding: 9px 13px;
+    border-radius: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* Input */
+
+.input-area {
+    display: flex;
+    padding: 12px;
+    border-top: 1px solid #ddd;
+    gap: 8px;
+}
+
+#userInput {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.send {
+    border: none;
+    background: #12395b;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.clear {
+    text-align: center;
+    font-size: 12px;
+    padding-bottom: 8px;
+    color: #777;
+    cursor: pointer;
+}
+</style>
 </head>
 
 <body>
 
-    <h1>✈️ AEROASSIST</h1>
-    <p>Aviation Operations & Passenger Support Assistant</p>
+<div class="app">
 
-    <hr>
-
-    <div id="chat">
-        <p><strong>AEROASSIST:</strong> Hello! How can I assist you today?</p>
+    <div class="header">
+        <h1>✈️ AEROASSIST</h1>
+        <p>Aviation Operations & Passenger Support Assistant</p>
     </div>
 
-    <br>
+    <div id="chat">
 
-    <button onclick="askQuestion('baggage')">🧳 Baggage</button>
-    <button onclick="askQuestion('checkin')">🎫 Check-in</button>
-    <button onclick="askQuestion('boarding')">🛫 Boarding</button>
-    <button onclick="askQuestion('airport')">🏢 Airport</button>
+        <div class="message bot">
+            <div class="bubble">
+                Hello! I'm AEROASSIST. I can help with baggage, check-in,
+                boarding, delays, airport facilities and passenger support.
+                How can I help?
+            </div>
+        </div>
 
-    <br><br>
+    </div>
 
-    <input
-        type="text"
-        id="userInput"
-        placeholder="Ask an aviation question..."
-    >
+    <div class="quick-buttons">
 
-    <button onclick="sendMessage()">Send</button>
+        <button onclick="askQuestion('baggage')">
+            🧳 Baggage
+        </button>
 
-    <script>
-        function addMessage(sender, message) {
-            const chat = document.getElementById("chat");
+        <button onclick="askQuestion('checkin')">
+            🎫 Check-in
+        </button>
 
-            const p = document.createElement("p");
-            p.innerHTML = "<strong>" + sender + ":</strong> " + message;
+        <button onclick="askQuestion('boarding')">
+            🛫 Boarding
+        </button>
 
-            chat.appendChild(p);
-        }
+        <button onclick="askQuestion('delay')">
+            ⏱️ Delays
+        </button>
 
-        function getResponse(question) {
+    </div>
 
-            question = question.toLowerCase();
+    <div class="clear" onclick="clearChat()">
+        Clear conversation
+    </div>
 
-            if (question.includes("baggage")) {
-                return "Baggage allowance depends on the airline, route and ticket type. Please check your airline's official baggage policy.";
-            }
+    <div class="input-area">
 
-            if (question.includes("check")) {
-                return "Online check-in is usually available before departure. The exact opening and closing time depends on the airline.";
-            }
+        <input
+            type="text"
+            id="userInput"
+            placeholder="Ask an aviation question..."
+            onkeydown="handleEnter(event)"
+        >
 
-            if (question.includes("boarding")) {
-                return "Passengers should be at the boarding gate before the boarding deadline shown on their boarding pass or airport announcements.";
-            }
+        <button class="send" onclick="sendMessage()">
+            ➤
+        </button>
 
-            if (question.includes("lost")) {
-                return "If your baggage is missing, report it to the airline's baggage service desk before leaving the airport and keep your baggage tag.";
-            }
+    </div>
 
-            if (question.includes("delay")) {
-                return "For a delayed flight, check the airline's latest flight status and follow instructions from airline or airport staff.";
-            }
+</div>
 
-            if (question.includes("airport")) {
-                return "AEROASSIST can provide general guidance about airport facilities, check-in, boarding, baggage and passenger support.";
-            }
+<script>
 
-            return "I currently specialize in aviation support. Try asking about baggage, check-in, boarding, airport facilities, lost baggage or flight delays.";
-        }
+function addMessage(sender, message) {
 
-        function sendMessage() {
+    const chat = document.getElementById("chat");
 
-            const input = document.getElementById("userInput");
-            const question = input.value.trim();
+    const container = document.createElement("div");
 
-            if (question === "") return;
+    container.className =
+        "message " + (sender === "You" ? "user" : "bot");
 
-            addMessage("You", question);
+    const bubble = document.createElement("div");
 
-            const response = getResponse(question);
+    bubble.className = "bubble";
 
-            setTimeout(function() {
-                addMessage("AEROASSIST", response);
-            }, 400);
+    bubble.textContent = message;
 
-            input.value = "";
-        }
+    container.appendChild(bubble);
 
-        function askQuestion(type) {
+    chat.appendChild(container);
 
-            let question = "";
+    chat.scrollTop = chat.scrollHeight;
+}
 
-            if (type === "baggage") {
-                question = "What should I know about baggage?";
-            }
 
-            if (type === "checkin") {
-                question = "How does check-in work?";
-            }
+function getResponse(question) {
 
-            if (type === "boarding") {
-                question = "What should I know about boarding?";
-            }
+    question = question.toLowerCase();
 
-            if (type === "airport") {
-                question = "What airport information can you provide?";
-            }
 
-            addMessage("You", question);
-            addMessage("AEROASSIST", getResponse(question));
-        }
-    </script>
+    /* BAGGAGE */
+
+    if (
+        question.includes("baggage") ||
+        question.includes("luggage") ||
+        question.includes("suitcase") ||
+        question.includes("bag")
+    ) {
+
+        return "Baggage allowance depends on the airline, route, cabin class and ticket type. Check your airline's official baggage policy for the exact allowance. For missing baggage, report it to the airline's baggage service desk before leaving the airport.";
+    }
+
+
+    /* CHECK-IN */
+
+    if (
+        question.includes("check-in") ||
+        question.includes("check in") ||
+        question.includes("checkin")
+    ) {
+
+        return "Check-in may be available online or at the airport. Online check-in opening and closing times vary by airline. At the airport, allow enough time for baggage drop, security and boarding.";
+    }
+
+
+    /* BOARDING */
+
+    if (
+        question.includes("boarding") ||
+        question.includes("gate")
+    ) {
+
+        return "Check your boarding pass and airport information screens for your gate. Be at the gate before the boarding deadline shown by your airline. Gates can change, so monitor airport announcements and displays.";
+    }
+
+
+    /* DELAYS */
+
+    if (
+        question.includes("delay") ||
+        question.includes("late")
+    ) {
+
+        return "For a delayed flight, check the airline's latest flight status and airport information screens. Follow instructions from airline staff regarding revised boarding times or rebooking.";
+    }
+
+
+    /* CANCEL */
+
+    if (
+        question.includes("cancel") ||
+        question.includes("cancelled") ||
+        question.includes("canceled")
+    ) {
+
+        return "If your flight is cancelled, contact the airline or check its official app or website for rebooking and refund options. Your available options depend on the airline and applicable passenger-protection rules.";
+    }
+
+
+    /* LOST BAGGAGE */
+
+    if (
+        question.includes("lost baggage") ||
+        question.includes("lost luggage") ||
+        question.includes("missing bag") ||
+        question.includes("missing baggage")
+    ) {
+
+        return "If your baggage does not arrive, report it to the airline's baggage service desk immediately. Keep your baggage tag, boarding pass and baggage report reference number.";
+    }
+
+
+    /* SECURITY */
+
+    if (
+        question.includes("security") ||
+        question.includes("security check")
+    ) {
+
+        return "Passengers normally pass through security screening before entering the departure area. Keep your boarding pass and required travel documents accessible and follow airport security instructions.";
+    }
+
+
+    /* AIRPORT */
+
+    if (
+        question.includes("airport") ||
+        question.includes("terminal") ||
+        question.includes("facility")
+    ) {
+
+        return "I can provide general guidance about airport terminals, check-in, security, boarding, baggage, passenger assistance and common airport facilities.";
+    }
+
+
+    /* SPECIAL ASSISTANCE */
+
+    if (
+        question.includes("wheelchair") ||
+        question.includes("special assistance") ||
+        question.includes("disabled") ||
+        question.includes("assistance")
+    ) {
+
+        return "Passengers requiring special assistance should contact their airline or airport assistance service as early as possible. Assistance procedures vary between airports and airlines.";
+    }
+
+
+    /* CONNECTION */
+
+    if (
+        question.includes("connecting") ||
+        question.includes("connection") ||
+        question.includes("transit")
+    ) {
+
+        return "For connecting flights, check whether you need to change terminals, pass security again, collect baggage or complete immigration. Requirements depend on the airport, airline and itinerary.";
+    }
+
+
+    /* GREETING */
+
+    if (
+        question.includes("hello") ||
+        question.includes("hi") ||
+        question.includes("hey")
+    ) {
+
+        return "Hello! I'm AEROASSIST. Ask me about baggage, check-in, boarding, delays, cancellations, airport facilities or passenger assistance.";
+    }
+
+
+    return "I'm currently focused on aviation operations and passenger support. Try asking about baggage, check-in, boarding, flight delays, cancellations, airport facilities, security or special assistance.";
+
+}
+
+
+function sendMessage() {
+
+    const input = document.getElementById("userInput");
+
+    const question = input.value.trim();
+
+    if (question === "") {
+        return;
+    }
+
+    addMessage("You", question);
+
+    input.value = "";
+
+    setTimeout(function() {
+
+        const response = getResponse(question);
+
+        addMessage("AEROASSIST", response);
+
+    }, 500);
+
+}
+
+
+function askQuestion(type) {
+
+    let question = "";
+
+    if (type === "baggage") {
+        question = "What should I know about baggage?";
+    }
+
+    if (type === "checkin") {
+        question = "How does check-in work?";
+    }
+
+    if (type === "boarding") {
+        question = "What should I know about boarding?";
+    }
+
+    if (type === "delay") {
+        question = "What should I do if my flight is delayed?";
+    }
+
+    addMessage("You", question);
+
+    setTimeout(function() {
+
+        addMessage("AEROASSIST", getResponse(question));
+
+    }, 400);
+
+}
+
+
+function handleEnter(event) {
+
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+
+}
+
+
+function clearChat() {
+
+    document.getElementById("chat").innerHTML = "";
+
+    addMessage(
+        "AEROASSIST",
+        "Hello! I'm AEROASSIST. How can I assist you with your aviation question?"
+    );
+
+}
+
+</script>
 
 </body>
 </html>
