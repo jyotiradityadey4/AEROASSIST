@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEROASSIST | Aviation Support</title>
+</head>
+
+<body>
+
+    <h1>✈️ AEROASSIST</h1>
+    <p>Aviation Operations & Passenger Support Assistant</p>
+
+    <hr>
+
+    <div id="chat">
+        <p><strong>AEROASSIST:</strong> Hello! How can I assist you today?</p>
+    </div>
+
+    <br>
+
+    <button onclick="askQuestion('baggage')">🧳 Baggage</button>
+    <button onclick="askQuestion('checkin')">🎫 Check-in</button>
+    <button onclick="askQuestion('boarding')">🛫 Boarding</button>
+    <button onclick="askQuestion('airport')">🏢 Airport</button>
+
+    <br><br>
+
+    <input
+        type="text"
+        id="userInput"
+        placeholder="Ask an aviation question..."
+    >
+
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function addMessage(sender, message) {
+            const chat = document.getElementById("chat");
+
+            const p = document.createElement("p");
+            p.innerHTML = "<strong>" + sender + ":</strong> " + message;
+
+            chat.appendChild(p);
+        }
+
+        function getResponse(question) {
+
+            question = question.toLowerCase();
+
+            if (question.includes("baggage")) {
+                return "Baggage allowance depends on the airline, route and ticket type. Please check your airline's official baggage policy.";
+            }
+
+            if (question.includes("check")) {
+                return "Online check-in is usually available before departure. The exact opening and closing time depends on the airline.";
+            }
+
+            if (question.includes("boarding")) {
+                return "Passengers should be at the boarding gate before the boarding deadline shown on their boarding pass or airport announcements.";
+            }
+
+            if (question.includes("lost")) {
+                return "If your baggage is missing, report it to the airline's baggage service desk before leaving the airport and keep your baggage tag.";
+            }
+
+            if (question.includes("delay")) {
+                return "For a delayed flight, check the airline's latest flight status and follow instructions from airline or airport staff.";
+            }
+
+            if (question.includes("airport")) {
+                return "AEROASSIST can provide general guidance about airport facilities, check-in, boarding, baggage and passenger support.";
+            }
+
+            return "I currently specialize in aviation support. Try asking about baggage, check-in, boarding, airport facilities, lost baggage or flight delays.";
+        }
+
+        function sendMessage() {
+
+            const input = document.getElementById("userInput");
+            const question = input.value.trim();
+
+            if (question === "") return;
+
+            addMessage("You", question);
+
+            const response = getResponse(question);
+
+            setTimeout(function() {
+                addMessage("AEROASSIST", response);
+            }, 400);
+
+            input.value = "";
+        }
+
+        function askQuestion(type) {
+
+            let question = "";
+
+            if (type === "baggage") {
+                question = "What should I know about baggage?";
+            }
+
+            if (type === "checkin") {
+                question = "How does check-in work?";
+            }
+
+            if (type === "boarding") {
+                question = "What should I know about boarding?";
+            }
+
+            if (type === "airport") {
+                question = "What airport information can you provide?";
+            }
+
+            addMessage("You", question);
+            addMessage("AEROASSIST", getResponse(question));
+        }
+    </script>
+
+</body>
+</html>
