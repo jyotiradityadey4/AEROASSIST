@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AEROASSIST | Aviation Support</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>AEROASSIST | Kolkata Airport</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,14 +28,14 @@ body {
 
 .app {
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
     height: 100vh;
     background: white;
     display: flex;
     flex-direction: column;
 }
 
-/* Header */
+/* HEADER */
 
 .header {
     background: #12395b;
@@ -44,12 +49,12 @@ body {
 }
 
 .header p {
-    font-size: 13px;
     margin-top: 5px;
+    font-size: 13px;
     opacity: 0.85;
 }
 
-/* Chat */
+/* CHAT */
 
 #chat {
     flex: 1;
@@ -58,8 +63,8 @@ body {
 }
 
 .message {
-    margin-bottom: 15px;
     display: flex;
+    margin-bottom: 15px;
 }
 
 .bot {
@@ -71,10 +76,10 @@ body {
 }
 
 .bubble {
-    max-width: 80%;
-    padding: 12px 15px;
-    border-radius: 15px;
-    line-height: 1.4;
+    max-width: 82%;
+    padding: 13px 15px;
+    border-radius: 16px;
+    line-height: 1.5;
     font-size: 14px;
 }
 
@@ -90,13 +95,14 @@ body {
     border-bottom-right-radius: 4px;
 }
 
-/* Quick buttons */
+/* QUICK BUTTONS */
 
 .quick-buttons {
     padding: 10px;
     display: flex;
     gap: 8px;
     overflow-x: auto;
+    border-top: 1px solid #eee;
 }
 
 .quick-buttons button {
@@ -108,7 +114,7 @@ body {
     cursor: pointer;
 }
 
-/* Input */
+/* INPUT */
 
 .input-area {
     display: flex;
@@ -119,10 +125,11 @@ body {
 
 #userInput {
     flex: 1;
-    padding: 12px;
+    padding: 12px 15px;
     border: 1px solid #ccc;
-    border-radius: 20px;
+    border-radius: 22px;
     outline: none;
+    font-size: 14px;
 }
 
 .send {
@@ -133,319 +140,459 @@ body {
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
+    font-size: 17px;
 }
 
 .clear {
     text-align: center;
     font-size: 12px;
-    padding-bottom: 8px;
+    padding: 6px;
     color: #777;
     cursor: pointer;
 }
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    font-size: 10px;
+    color: #888;
+    padding-bottom: 5px;
+}
+
 </style>
+
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <div class="header">
-        <h1>✈️ AEROASSIST</h1>
-        <p>Aviation Operations & Passenger Support Assistant</p>
-    </div>
 
-    <div id="chat">
+<!-- HEADER -->
 
-        <div class="message bot">
-            <div class="bubble">
-                Hello! I'm AEROASSIST. I can help with baggage, check-in,
-                boarding, delays, airport facilities and passenger support.
-                How can I help?
-            </div>
-        </div>
+<div class="header">
 
-    </div>
+<h1>✈️ AEROASSIST</h1>
 
-    <div class="quick-buttons">
-
-        <button onclick="askQuestion('baggage')">
-            🧳 Baggage
-        </button>
-
-        <button onclick="askQuestion('checkin')">
-            🎫 Check-in
-        </button>
-
-        <button onclick="askQuestion('boarding')">
-            🛫 Boarding
-        </button>
-
-        <button onclick="askQuestion('delay')">
-            ⏱️ Delays
-        </button>
-
-    </div>
-
-    <div class="clear" onclick="clearChat()">
-        Clear conversation
-    </div>
-
-    <div class="input-area">
-
-        <input
-            type="text"
-            id="userInput"
-            placeholder="Ask an aviation question..."
-            onkeydown="handleEnter(event)"
-        >
-
-        <button class="send" onclick="sendMessage()">
-            ➤
-        </button>
-
-    </div>
+<p>
+Kolkata Airport Passenger Support Assistant
+</p>
 
 </div>
 
+
+<!-- CHAT -->
+
+<div id="chat">
+
+<div class="message bot">
+
+<div class="bubble">
+
+Hello! I'm AEROASSIST.
+
+I provide passenger-support information for
+Netaji Subhas Chandra Bose International Airport,
+Kolkata (CCU / VECC).
+
+You can ask me about baggage, check-in,
+security, DigiYatra, immigration, transport,
+parking, facilities and more.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- QUICK QUESTIONS -->
+
+<div class="quick-buttons">
+
+<button onclick="askQuestion('What is the airport code?')">
+🏢 Airport
+</button>
+
+<button onclick="askQuestion('How does check-in work?')">
+🎫 Check-in
+</button>
+
+<button onclick="askQuestion('Where are the baggage belts?')">
+🧳 Baggage
+</button>
+
+<button onclick="askQuestion('Where are prepaid taxis?')">
+🚕 Taxi
+</button>
+
+<button onclick="askQuestion('Is DigiYatra available?')">
+📱 DigiYatra
+</button>
+
+</div>
+
+
+<!-- CLEAR -->
+
+<div class="clear"
+onclick="clearChat()">
+
+Clear conversation
+
+</div>
+
+
+<!-- INPUT -->
+
+<div class="input-area">
+
+<input
+type="text"
+id="userInput"
+placeholder="Ask about Kolkata Airport..."
+onkeydown="handleEnter(event)"
+>
+
+<button
+class="send"
+onclick="sendMessage()">
+
+➤
+
+</button>
+
+</div>
+
+
+<div class="footer">
+
+AEROASSIST • CCU Passenger Information
+
+</div>
+
+
+</div>
+
+
+<!-- KNOWLEDGE BASE -->
+
+<script src="knowledge-base.js"></script>
+
+
 <script>
 
-function addMessage(sender, message) {
 
-    const chat = document.getElementById("chat");
+/*
+=====================================================
+AEROASSIST KNOWLEDGE ENGINE
+=====================================================
+*/
 
-    const container = document.createElement("div");
+
+function addMessage(sender, message, source = null) {
+
+    const chat =
+        document.getElementById("chat");
+
+    const container =
+        document.createElement("div");
 
     container.className =
-        "message " + (sender === "You" ? "user" : "bot");
+        "message " +
+        (sender === "You" ? "user" : "bot");
 
-    const bubble = document.createElement("div");
+
+    const bubble =
+        document.createElement("div");
 
     bubble.className = "bubble";
 
-    bubble.textContent = message;
+
+    const text =
+        document.createElement("div");
+
+    text.textContent = message;
+
+
+    bubble.appendChild(text);
+
+
+    /*
+    Show source information for bot responses
+    */
+
+    if (source) {
+
+        const sourceBox =
+            document.createElement("div");
+
+        sourceBox.style.marginTop = "8px";
+
+        sourceBox.style.fontSize = "10px";
+
+        sourceBox.style.opacity = "0.65";
+
+        sourceBox.textContent =
+            "Source: " +
+            source.source +
+            " • Verified: " +
+            source.lastVerified;
+
+        bubble.appendChild(sourceBox);
+
+    }
+
 
     container.appendChild(bubble);
 
     chat.appendChild(container);
 
-    chat.scrollTop = chat.scrollHeight;
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+}
+
+
+/*
+=====================================================
+QUESTION MATCHING
+=====================================================
+*/
+
+
+function findAnswer(question) {
+
+    const q =
+        question.toLowerCase().trim();
+
+
+    let bestMatch = null;
+
+    let bestScore = 0;
+
+
+    for (
+        const item of CCU_KNOWLEDGE_BASE
+    ) {
+
+        let score = 0;
+
+
+        /*
+        Check keywords
+        */
+
+        for (
+            const keyword of item.keywords
+        ) {
+
+            if (
+                q.includes(
+                    keyword.toLowerCase()
+                )
+            ) {
+
+                score +=
+                    keyword.split(" ").length + 1;
+
+            }
+
+        }
+
+
+        /*
+        Check category
+        */
+
+        if (
+            q.includes(
+                item.category.toLowerCase()
+            )
+        ) {
+
+            score += 2;
+
+        }
+
+
+        /*
+        Keep highest score
+        */
+
+        if (
+            score > bestScore
+        ) {
+
+            bestScore = score;
+
+            bestMatch = item;
+
+        }
+
+    }
+
+
+    /*
+    No useful match
+    */
+
+    if (
+        !bestMatch ||
+        bestScore === 0
+    ) {
+
+        return {
+
+            answer:
+                "I couldn't find a verified answer for that question in my current Kolkata Airport knowledge base. Try asking about baggage, check-in, security, DigiYatra, immigration, transport, parking, lounges, food, shopping or passenger assistance.",
+
+            source: null
+
+        };
+
+    }
+
+
+    return {
+
+        answer:
+            bestMatch.answer,
+
+        source:
+            bestMatch
+
+    };
+
 }
 
 
-function getResponse(question) {
-
-    question = question.toLowerCase();
-
-
-    /* BAGGAGE */
-
-    if (
-        question.includes("baggage") ||
-        question.includes("luggage") ||
-        question.includes("suitcase") ||
-        question.includes("bag")
-    ) {
-
-        return "Baggage allowance depends on the airline, route, cabin class and ticket type. Check your airline's official baggage policy for the exact allowance. For missing baggage, report it to the airline's baggage service desk before leaving the airport.";
-    }
-
-
-    /* CHECK-IN */
-
-    if (
-        question.includes("check-in") ||
-        question.includes("check in") ||
-        question.includes("checkin")
-    ) {
-
-        return "Check-in may be available online or at the airport. Online check-in opening and closing times vary by airline. At the airport, allow enough time for baggage drop, security and boarding.";
-    }
-
-
-    /* BOARDING */
-
-    if (
-        question.includes("boarding") ||
-        question.includes("gate")
-    ) {
-
-        return "Check your boarding pass and airport information screens for your gate. Be at the gate before the boarding deadline shown by your airline. Gates can change, so monitor airport announcements and displays.";
-    }
-
-
-    /* DELAYS */
-
-    if (
-        question.includes("delay") ||
-        question.includes("late")
-    ) {
-
-        return "For a delayed flight, check the airline's latest flight status and airport information screens. Follow instructions from airline staff regarding revised boarding times or rebooking.";
-    }
-
-
-    /* CANCEL */
-
-    if (
-        question.includes("cancel") ||
-        question.includes("cancelled") ||
-        question.includes("canceled")
-    ) {
-
-        return "If your flight is cancelled, contact the airline or check its official app or website for rebooking and refund options. Your available options depend on the airline and applicable passenger-protection rules.";
-    }
-
-
-    /* LOST BAGGAGE */
-
-    if (
-        question.includes("lost baggage") ||
-        question.includes("lost luggage") ||
-        question.includes("missing bag") ||
-        question.includes("missing baggage")
-    ) {
-
-        return "If your baggage does not arrive, report it to the airline's baggage service desk immediately. Keep your baggage tag, boarding pass and baggage report reference number.";
-    }
-
-
-    /* SECURITY */
-
-    if (
-        question.includes("security") ||
-        question.includes("security check")
-    ) {
-
-        return "Passengers normally pass through security screening before entering the departure area. Keep your boarding pass and required travel documents accessible and follow airport security instructions.";
-    }
-
-
-    /* AIRPORT */
-
-    if (
-        question.includes("airport") ||
-        question.includes("terminal") ||
-        question.includes("facility")
-    ) {
-
-        return "I can provide general guidance about airport terminals, check-in, security, boarding, baggage, passenger assistance and common airport facilities.";
-    }
-
-
-    /* SPECIAL ASSISTANCE */
-
-    if (
-        question.includes("wheelchair") ||
-        question.includes("special assistance") ||
-        question.includes("disabled") ||
-        question.includes("assistance")
-    ) {
-
-        return "Passengers requiring special assistance should contact their airline or airport assistance service as early as possible. Assistance procedures vary between airports and airlines.";
-    }
-
-
-    /* CONNECTION */
-
-    if (
-        question.includes("connecting") ||
-        question.includes("connection") ||
-        question.includes("transit")
-    ) {
-
-        return "For connecting flights, check whether you need to change terminals, pass security again, collect baggage or complete immigration. Requirements depend on the airport, airline and itinerary.";
-    }
-
-
-    /* GREETING */
-
-    if (
-        question.includes("hello") ||
-        question.includes("hi") ||
-        question.includes("hey")
-    ) {
-
-        return "Hello! I'm AEROASSIST. Ask me about baggage, check-in, boarding, delays, cancellations, airport facilities or passenger assistance.";
-    }
-
-
-    return "I'm currently focused on aviation operations and passenger support. Try asking about baggage, check-in, boarding, flight delays, cancellations, airport facilities, security or special assistance.";
-
-}
+/*
+=====================================================
+SEND MESSAGE
+=====================================================
+*/
 
 
 function sendMessage() {
 
-    const input = document.getElementById("userInput");
+    const input =
+        document.getElementById("userInput");
 
-    const question = input.value.trim();
 
-    if (question === "") {
+    const question =
+        input.value.trim();
+
+
+    if (
+        question === ""
+    ) {
+
         return;
+
     }
 
-    addMessage("You", question);
+
+    addMessage(
+        "You",
+        question
+    );
+
 
     input.value = "";
 
+
+    /*
+    Small response delay
+    */
+
     setTimeout(function() {
 
-        const response = getResponse(question);
+        const result =
+            findAnswer(question);
 
-        addMessage("AEROASSIST", response);
 
-    }, 500);
+        addMessage(
+            "AEROASSIST",
+            result.answer,
+            result.source
+        );
+
+    }, 450);
 
 }
 
 
-function askQuestion(type) {
+/*
+=====================================================
+QUICK QUESTIONS
+=====================================================
+*/
 
-    let question = "";
 
-    if (type === "baggage") {
-        question = "What should I know about baggage?";
-    }
+function askQuestion(question) {
 
-    if (type === "checkin") {
-        question = "How does check-in work?";
-    }
+    addMessage(
+        "You",
+        question
+    );
 
-    if (type === "boarding") {
-        question = "What should I know about boarding?";
-    }
-
-    if (type === "delay") {
-        question = "What should I do if my flight is delayed?";
-    }
-
-    addMessage("You", question);
 
     setTimeout(function() {
 
-        addMessage("AEROASSIST", getResponse(question));
+        const result =
+            findAnswer(question);
 
-    }, 400);
+
+        addMessage(
+            "AEROASSIST",
+            result.answer,
+            result.source
+        );
+
+    }, 350);
 
 }
+
+
+/*
+=====================================================
+ENTER KEY
+=====================================================
+*/
 
 
 function handleEnter(event) {
 
-    if (event.key === "Enter") {
+    if (
+        event.key === "Enter"
+    ) {
+
         sendMessage();
+
     }
 
 }
+
+
+/*
+=====================================================
+CLEAR CHAT
+=====================================================
+*/
 
 
 function clearChat() {
 
     document.getElementById("chat").innerHTML = "";
 
+
     addMessage(
         "AEROASSIST",
-        "Hello! I'm AEROASSIST. How can I assist you with your aviation question?"
+        "Welcome back. Ask me anything about Kolkata Airport."
     );
 
 }
@@ -453,4 +600,5 @@ function clearChat() {
 </script>
 
 </body>
+
 </html>
