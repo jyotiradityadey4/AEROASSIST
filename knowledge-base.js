@@ -1049,6 +1049,6 @@ const CCU_KNOWLEDGE_BASE = [
         source: "Airports Authority of India",
         informationType: "Changeable",
         lastVerified: "2026-09-08"
-    },
+                ];
 
 
